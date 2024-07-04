@@ -1,0 +1,35 @@
+version: '3.9'
+
+services:
+
+  db:
+    image: postgres:12
+    container_name: db
+    environment:
+      - POSTGRES_ROOT_PASSWORD=rootpassword
+      - POSTGRES_DATABASE=diversolab
+      - POSTGRES_USER=diversolab
+      - POSTGRES_PASSWORD=diversolab
+    ports:
+      - "5434:5432"
+
+  spring_app:
+    build: ./backend
+    container_name: spring_app
+    depends_on:
+      - db
+    ports:
+      - "8080:8080"
+    environment:
+      - DATABASE_URL=jdbc:postgresql://db:5432/diversolab
+      - DATABASE_USERNAME=diversolab
+      - DATABASE_PASSWORD=diversolab
+
+  react_app:
+    build: ./frontend
+    container_name: react_app
+    depends_on:
+      - spring_app
+    ports:
+      - "5173:5173"
+
