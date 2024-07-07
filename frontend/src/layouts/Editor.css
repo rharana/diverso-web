@@ -1,0 +1,10 @@
+body {
+    background: #f3f1f2;
+    font-family: sans-serif;
+    color: black;
+}
+
+.mainframe{
+    background-color: black;
+    display: flex;
+}
