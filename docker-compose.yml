@@ -24,6 +24,8 @@ services:
       - DATABASE_URL=jdbc:postgresql://db:5432/diversolab
       - DATABASE_USERNAME=diversolab
       - DATABASE_PASSWORD=diversolab
+    volumes:
+      - ./uploads:/app/uploads
 
   react_app:
     build: ./frontend
