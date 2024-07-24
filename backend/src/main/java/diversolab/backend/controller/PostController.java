@@ -1,24 +1,31 @@
 package diversolab.backend.controller;
 import diversolab.backend.model.Post;
-import diversolab.backend.repository.PostRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import diversolab.backend.service.PostService;
 import java.util.List;
 
 @RestController
 @RequestMapping("/api/posts")
 public class PostController {
     @Autowired
-    PostRepository repository;
+    PostService service;
+
+    @PostMapping
+    public ResponseEntity<Post> createPost(@RequestBody Post post) {
+        Post createdPost = service.savePost(post);
+        return ResponseEntity.ok(createdPost);
+    }
 
     @GetMapping
     public List<Post> getAllPosts()
     {
-        return repository.findAll();
+        return service.getAllPosts();
     }
     @GetMapping("/{id}")
-    public Post getPostById(@PathVariable Integer id)
+    public Post getPostById(@PathVariable Long id)
     {
-        return repository.findById(id).get();
+        return service.getPostById(id).get();
     }
 }

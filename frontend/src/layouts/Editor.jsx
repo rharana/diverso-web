@@ -10,10 +10,29 @@ class App extends Component {
       editorHtml: ''
     };
     this.handleChange = this.handleChange.bind(this);
+    this.handleSave = this.handleSave.bind(this);
   }
 
   handleChange(html) {
     this.setState({ editorHtml: html });
+  }
+
+  async handleSave() {
+    const response = await fetch('http://localhost:8080/api/posts', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({ body: this.state.editorHtml })
+    });
+
+    if (response.ok) {
+      console.log('Post saved successfully!');
+      // Aquí puedes añadir lógica adicional después de guardar exitosamente el post, por ejemplo, limpiar el editor o mostrar una notificación.
+    } else {
+      console.error('Failed to save post');
+      // Manejo de errores, por ejemplo, mostrar un mensaje de error.
+    }
   }
 
   render() {
@@ -26,6 +45,7 @@ class App extends Component {
         <PreviewEditor
           htmlContent={this.state.editorHtml}
         />
+        <button onClick={this.handleSave}>Save</button>
       </div>
     );
   }

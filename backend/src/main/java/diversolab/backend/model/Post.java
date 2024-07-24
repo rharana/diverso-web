@@ -1,4 +1,3 @@
-
 package diversolab.backend.model;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
@@ -6,6 +5,8 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.OneToOne;
@@ -17,6 +18,7 @@ import jakarta.validation.constraints.NotEmpty;
 public class Post {
 
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @JsonProperty("id")
     private Integer id;
 
@@ -29,13 +31,6 @@ public class Post {
     @JoinColumn(name = "author_id", referencedColumnName = "id")
     @OneToOne(cascade=CascadeType.ALL)
     private User author;
-
-    @JsonProperty("created_at")
-    @NotEmpty(message = "The field created_at cannot be empty.")
-    private String createdAt;
-    
-    @JsonProperty("updated_at")
-    private String updatedAt;
 
     public Integer getId() {
         return id;
@@ -61,22 +56,6 @@ public class Post {
         this.author = author;
     }
 
-    public String getCreatedAt() {
-        return createdAt;
-    }
-
-    public void setCreatedAt(String createdAt) {
-        this.createdAt = createdAt;
-    }
-
-    public String getUpdatedAt() {
-        return updatedAt;
-    }
-
-    public void setUpdatedAt(String updatedAt) {
-        this.updatedAt = updatedAt;
-    }
-
     @Override
     public String toString() {
         StringBuilder sb = new StringBuilder();
@@ -92,14 +71,6 @@ public class Post {
         sb.append("author");
         sb.append('=');
         sb.append(((this.author == null) ? "<null>" : this.author));
-        sb.append(',');
-        sb.append("createdAt");
-        sb.append('=');
-        sb.append(((this.createdAt == null) ? "<null>" : this.createdAt));
-        sb.append(',');
-        sb.append("updatedAt");
-        sb.append('=');
-        sb.append(((this.updatedAt == null) ? "<null>" : this.updatedAt));
         sb.append(',');
         if (sb.charAt((sb.length() - 1)) == ',') {
             sb.setCharAt((sb.length() - 1), ']');
