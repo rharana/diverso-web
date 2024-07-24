@@ -5,6 +5,7 @@ body {
 }
 
 .mainframe{
-    background-color: black;
     display: flex;
+    width: 100vw;
+    padding: 2em;
 }

@@ -1,31 +1,21 @@
-import { Component } from 'react';
+import React, { Component } from 'react';
 import ReactQuill, { Quill } from 'react-quill';
 import 'react-quill/dist/quill.snow.css';
 import ImageResize from 'quill-image-resize-module-react';
 import './QuillEditor.css';
 
+// Register the image resize module
 Quill.register('modules/imageResize', ImageResize);
 
-class Editor extends Component {
-  constructor(props) {
-    super(props);
-    this.state = { editorHtml: '' };
-    this.handleChange = this.handleChange.bind(this);
-  }
-
-  handleChange(html) {
-    this.setState({ editorHtml: html });
-    console.log(html);
-  }
-
+class QuillEditor extends Component {
   render() {
     return (
       <ReactQuill
-        theme={this.state.theme}
-        onChange={this.handleChange}
-        value={this.state.editorHtml}
-        modules={Editor.modules}
-        formats={Editor.formats}
+        theme="snow" // set the theme as snow
+        onChange={this.props.onChange} // use onChange from props
+        value={this.props.editorHtml} // use editorHtml from props
+        modules={QuillEditor.modules}
+        formats={QuillEditor.formats}
         bounds={'#root'}
         placeholder={this.props.placeholder}
       />
@@ -33,11 +23,8 @@ class Editor extends Component {
   }
 }
 
-/*
- * Quill modules to attach to editor
- * See https://quilljs.com/docs/modules/ for complete options
- */
-Editor.modules = {
+// Quill modules to attach to editor
+QuillEditor.modules = {
   toolbar: [
     [{ header: '1' }, { header: '2' }, { font: [] }],
     [{ size: [] }],
@@ -52,8 +39,7 @@ Editor.modules = {
     ['clean']
   ],
   clipboard: {
-    // toggle to add extra line breaks when pasting HTML:
-    matchVisual: false
+    matchVisual: false // toggle to add extra line breaks when pasting HTML
   },
   imageResize: {
     parchment: Quill.import('parchment'),
@@ -61,11 +47,8 @@ Editor.modules = {
   }
 };
 
-/*
- * Quill editor formats
- * See https://quilljs.com/docs/formats/
- */
-Editor.formats = [
+// Quill editor formats
+QuillEditor.formats = [
   'header',
   'font',
   'size',
@@ -82,4 +65,4 @@ Editor.formats = [
   'video'
 ];
 
-export default Editor;
+export default QuillEditor;
